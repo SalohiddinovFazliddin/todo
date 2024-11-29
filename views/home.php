@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="uz">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -9,58 +9,152 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <style>
+
+        body {
+            background-color: #f4f6f9;
+            font-family: Arial, sans-serif;
+        }
+
         .todo-body {
             max-width: 700px;
-            box-shadow: 0 0 5px 5px #ccc;
+            margin: 0 auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .todo-text {
             font-weight: bold;
+            font-size: 2.5rem;
+            color: #333;
+            text-align: center;
+        }
+
+        .todo-form input, .todo-form button {
+            border-radius: 8px;
+        }
+
+        .todo-form input[type="text"], .todo-form input[type="datetime-local"] {
+            margin-right: 10px;
+        }
+
+        .list-group-item {
+            font-size: 1.1rem;
+            border: none;
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .completed {
+            text-decoration: line-through;
+            color: #888;
+        }
+        .in_progress {
+            text-decoration: underline;
+            color: orange!important;
+        }
+
+        .btn-custom {
+            border-radius: 8px;
+            padding: 8px 15px;
+            font-size: 1rem;
+        }
+
+        .btn-in-progress {
+            background-color: #f0ad4e;
+            color: white;
+        }
+
+        .btn-complete {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-in-progress:hover, .btn-complete:hover {
+            background-color: #d39e00;
+            color: white;
+        }
+
+        /* Responsivlikni yaxshilash */
+        @media (max-width: 768px) {
+            .todo-body {
+                padding: 20px;
+            }
+            .todo-text {
+                font-size: 2rem;
+            }
+
+
         }
     </style>
 </head>
 <body>
+
+<?php
+
+/** @var TYPE_NAME $todos */
+
+?>
+
 <div class="container">
     <div class="row d-flex justify-content-center">
         <div class="todo-body my-5 p-3">
             <h1 class="text-center todo-text">Todo App</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam aperiam autem eveniet illum ipsa, nihil
-                numquam officiis pariatur placeat quae quasi recusandae repellat similique tempora tenetur ut vel veniam
-                veritatis.</p>
+            <p class="text-center">Kunlik Vazifangizni Kiriting☺️</p>
             <form method="POST" action="/store">
-                <div class="input-group mb-3">
-                    <input type="text" class="form-control" placeholder="Recipient's username"
-                           aria-label="Recipient's username" aria-describedby="button-addon2"
-                           name="title"
-                    >
-                    <input type="datetime-local" class="form-control" placeholder="Recipient's username"
-                           aria-label="Recipient's username" aria-describedby="button-addon2"
-                           name="due_date"
-                    >
-                    <button class="btn btn-primary" type="submit" id="button-addon2">Add</button>
+                <div class="input-group mb-3 todo-form">
+                    <input type="text" class="form-control" placeholder="Vazifangizni kiriting"
+                           aria-label="Vazifa" name="title" required>
+                    <input type="datetime-local" class="form-control" name="due_date" required>
+                    <button class="btn btn-primary btn-custom" type="submit" id="button-addon2">Qo'shish</button>
                 </div>
             </form>
             <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <?php
-                    /** @var TYPE_NAME $todos */
-                    foreach ($todos as $todo){
+                <?php
+                foreach ($todos as $todo) {
+                    if ($todo['status']=='completed') {
                         echo '
-                    <li class="list-group-item d-flex justify-content-between align-items-center">
-                    ' . $todo["id"] . '
-                    <div>
-                        <a href="/complete?id= '.$todo["id"].'" class="btn btn-outline-success">Complete</a>
-                    </div>
-                ';
+                        <li class="' . $todo['status'] . ' list-group-item d-flex justify-content-between align-items-center">
+                            ' . $todo["title"] . '
+                            <div>
+                                <a href="/in_progress?id= ' . $todo["id"] . '" class="btn btn-in-progress btn-custom">In progress</a>
+                                <a href="/pending?id=' . $todo["id"] . '" class="btn btn-complete btn-custom">Pending❌</a>
+                            </div>
+                        </li>
+                    ';
                     }
-                    ?>
+                 elseif($todo['status']=='pending'){
+                     echo '
+                        <li class="' . $todo['status'] . ' list-group-item d-flex justify-content-between align-items-center">
+                            ' . $todo["title"] . '
+                            <div>
+                                <a href="/in_progress?id= ' . $todo["id"] . '" class="btn btn-in-progress btn-custom">In progress</a>
+                                <a href="/complete?id=' . $todo["id"] . '" class="btn btn-complete btn-custom">Complete✅</a>
+                            </div>
+                        </li>
+                    ';
+                }elseif ($todo['status']=='in_progress'){
+                        echo '
+                        <li class="' . $todo['status'] . ' list-group-item d-flex justify-content-between align-items-center">
+                            ' . $todo["title"] . '
+                            <div>
+                                <a href="/complete?id=' . $todo["id"] . '" class="btn btn-complete btn-custom">Complete✅</a>
+                                <a href="/complete?id=' . $todo["id"] . '" class="btn btn-complete btn-custom">Pending</a>
+                            </div>
+                        </li>
+                    ';
+                    }
+                }
 
-
-                </li>
+                ?>
             </ul>
-
         </div>
     </div>
 </div>
+
 </body>
 </html>
