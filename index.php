@@ -1,45 +1,85 @@
 <?php
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+require 'src/Todo.php';  
+require 'helpers.php';   
+require 'src/Router.php';  
 
-require 'src/Todo.php';
-
-require 'helpers.php';
-
+$router = new Router();
 $todo = new Todo();
 
-if ($uri == '/') {
-    $todos = $todo->get();
+$router->get('/', function() {
+    echo '<a href="/todos">Todos</a>';
+});
+
+$router->get('/todos', function() use ($todo) {
+    $todos = $todo->getAllTodos();  
     view('home', [
-        'todos'=>$todos
+        'todos' => $todos   
     ]);
-} elseif ($uri == '/store') {
-    if (!empty($_POST['title']) && !empty($_POST['due_date'])) {
-        $todo->store($_POST['title'], $_POST['due_date']);
-        header('Location: /');
-        exit();
-    }
-}elseif ($uri == '/complete') {
+});
+
+$router->get('/complete', function() use ($todo) {
     if (!empty($_GET['id'])) {
-        $todo->complete($_GET['id']);
-        header('Location: /');
+        $todo->complete($_GET['id']);  
+        header('Location: /todos');
         exit();
     }
-}
-elseif ($uri == '/pending') {
+});
+
+$router->get('/in_progress', function() use ($todo) {
     if (!empty($_GET['id'])) {
-        $todo->pending($_GET['id']);
-        header('Location: /');
+        $todo->inProgress($_GET['id']);  
+        header('Location: /todos');
         exit();
     }
-}
-elseif ($uri == '/in_progress') {
+});
+
+$router->get('/pending', function() use ($todo) {
     if (!empty($_GET['id'])) {
-        $todo->inProgress($_GET['id']);
-        header('Location: /');
+        $todo->pending($_GET['id']);  
+        header('Location: /todos');
         exit();
     }
-}
-else{
-    echo $uri . " Bu sahifa topilmadi!";
-}
+});
+
+
+
+//
+//
+//$todo = new Todo();
+//
+//if ($uri == '/') {
+//    $todos = $todo->get();
+//    view('home', [
+//        'todos'=>$todos
+//    ]);
+//} elseif ($uri == '/store') {
+//    if (!empty($_POST['title']) && !empty($_POST['due_date'])) {
+//        $todo->store($_POST['title'], $_POST['due_date']);
+//        header('Location: /');
+//        exit();
+//    }
+//}elseif ($uri == '/complete') {
+//    if (!empty($_GET['id'])) {
+//        $todo->complete($_GET['id']);
+//        header('Location: /');
+//        exit();
+//    }
+//}
+//elseif ($uri == '/pending') {
+//    if (!empty($_GET['id'])) {
+//        $todo->pending($_GET['id']);
+//        header('Location: /');
+//        exit();
+//    }
+//}
+//elseif ($uri == '/in_progress') {
+//    if (!empty($_GET['id'])) {
+//        $todo->inProgress($_GET['id']);
+//        header('Location: /');
+//        exit();
+//    }
+//}
+//else{
+//    echo $uri . " Bu sahifa topilmadi!";
+//}
