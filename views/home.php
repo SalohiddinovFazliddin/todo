@@ -110,14 +110,14 @@
                         <?= htmlspecialchars($todo["title"]); ?>
                         <div>
                             <?php if ($todo['status'] == 'pending'): ?>
-                                <a href="/in_progress?id=<?= $todo['id']; ?>" class="btn btn-in-progress btn-custom">In progress</a>
-                                <a href="/complete?id=<?= $todo['id']; ?>" class="btn btn-complete btn-custom">Complete✅</a>
+                                <a href="/in_progress/<?= $todo['id']?> " class="btn btn-in-progress btn-custom">In progress</a>
+                                <a href="/complete/<?= $todo['id']?> " class="btn btn-complete btn-custom">Complete✅</a>
                             <?php elseif ($todo['status'] == 'in_progress'): ?>
-                                <a href="/complete?id=<?= $todo['id']; ?>" class="btn btn-complete btn-custom">Complete✅</a>
-                                <a href="/pending?id=<?= $todo['id']; ?>" class="btn btn-complete btn-custom">Pending❌</a>
+                                <a href="/complete/<?= $todo['id']?> " class="btn btn-complete btn-custom">Complete✅</a>
+                                <a href="/pending/<?= $todo['id']?> " class="btn btn-complete btn-custom">Pending❌</a>
                             <?php elseif ($todo['status'] == 'completed'): ?>
-                                <a href="/in_progress?id=<?= $todo['id']; ?>" class="btn btn-in-progress btn-custom">In progress</a>
-                                <a href="/pending?id=<?= $todo['id']; ?>" class="btn btn-complete btn-custom">Pending❌</a>
+                                <a href="/in_progress/<?= $todo['id']?> " class="btn btn-in-progress btn-custom">In progress</a>
+                                <a href="/pending/ <?= $todo['id']?> " class="btn btn-complete btn-custom">Pending❌</a>
                             <?php endif; ?>
                         </div>
                     </li>
