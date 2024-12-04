@@ -40,6 +40,17 @@ public function post($route, $callback)
             }
         }
     }
+
+    public function getTodo(int $id) {
+        $query = "SELECT * FROM todos WHERE id=:id";
+        $stmt = $this->$pdo->prepare($query);
+        $stmt->execute([
+            'id' => $id
+        ]);
+    }
 }
+
+
+
 
 ?>

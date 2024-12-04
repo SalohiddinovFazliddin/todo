@@ -105,27 +105,42 @@
                 </div>
             </form>
             <ul class="list-group">
-                <?php foreach ($todos as $todo): ?>
-                    <li class="list-group-item d-flex justify-content-between align-items-center <?= $todo['status']; ?>">
-                        <?= htmlspecialchars($todo["title"]); ?>
+                <?php /** @var TYPE_NAME $todos */
+                foreach ($todos as $todo){
+                    echo '<li class="list-group-item d-flex justify-content-between align-items-center ' . $todo['status'] . '">
+                        ' . $todo['title'] . '
+
                         <div>
-                            <?php if ($todo['status'] == 'pending'): ?>
-                                <a href="/in_progress/<?= $todo['id']?> " class="btn btn-in-progress btn-custom">In progress</a>
-                                <a href="/complete/<?= $todo['id']?> " class="btn btn-complete btn-custom">Complete✅</a>
-                            <?php elseif ($todo['status'] == 'in_progress'): ?>
-                                <a href="/complete/<?= $todo['id']?> " class="btn btn-complete btn-custom">Complete✅</a>
-                                <a href="/pending/<?= $todo['id']?> " class="btn btn-complete btn-custom">Pending❌</a>
-                            <?php elseif ($todo['status'] == 'completed'): ?>
-                                <a href="/in_progress/<?= $todo['id']?> " class="btn btn-in-progress btn-custom">In progress</a>
-                                <a href="/pending/ <?= $todo['id']?> " class="btn btn-complete btn-custom">Pending❌</a>
-                            <?php endif; ?>
+                                <a href="/todos/' . $todo['id'] .'/edit" class="btn btn-in-progress btn-custom">edit</a>
+                                <a href="/todos/' . $todo['id'] . '/delete" class="btn btn-complete btn-custom">Delete</a>
                         </div>
-                    </li>
-                <?php endforeach; ?>
+                    </li>';
+                }
+
+
+                ?>
             </ul>
         </div>
     </div>
 </div>
+
+
+
+<!---->
+<?php //if ($todo['status'] == 'pending'): ?>
+<!--    <a href="/in_progress/--><?php //= $todo['id']?><!-- " class="btn btn-in-progress btn-custom">In progress</a>-->
+<!--    <a href="/complete/--><?php //= $todo['id']?><!-- " class="btn btn-complete btn-custom">Complete✅</a>-->
+<?php //elseif ($todo['status'] == 'in_progress'): ?>
+<!--    <a href="/complete/--><?php //= $todo['id']?><!-- " class="btn btn-complete btn-custom">Complete✅</a>-->
+<!--    <a href="/pending/--><?php //= $todo['id']?><!-- " class="btn btn-complete btn-custom">Pending❌</a>-->
+<?php //elseif ($todo['status'] == 'completed'): ?>
+<!--    <a href="/in_progress/--><?php //= $todo['id']?><!-- " class="btn btn-in-progress btn-custom">In progress</a>-->
+<!--    <a href="/pending/--><?php //= $todo['id']?><!-- " class="btn btn-complete btn-custom">Pending❌</a>-->
+<?php //endif; ?>
+<!---->
+<!---->
+
+
 
 </body>
 </html>
