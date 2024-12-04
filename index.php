@@ -7,9 +7,9 @@ require 'src/Router.php';
 $router = new Router();
 $todo = new Todo();
 
-$router->get('/', function() {
-    echo '<a href="/todos">Todos</a>';
-});
+//$router->get('/', function() {
+//    echo '<a href="/todos">Todos</a>';
+//});
 
 
 
@@ -24,6 +24,10 @@ $router->get('/todos/{id}/edit', function ($todoId) use($todo){
 
 $router->get('/edit', function (){
     view('edit');
+});
+
+$router->get('/', function (){
+    view('main');
 });
 
 
