@@ -1,4 +1,5 @@
 <?php
+namespace App;
 
 class DB {
     public $host;
@@ -11,6 +12,6 @@ class DB {
         $this->user = $_ENV["DB_USER"];
         $this->pass = $_ENV["DB_PASSWORD"];
         $this->db = $_ENV["DB_NAME"];
-        $this->conn = new PDO("mysql:host=" . $this->host . ";dbname=" . $this->db, $this->user, $this->pass);
+        $this->conn = new \PDO("mysql:host=" . $this->host . ";dbname=" . $this->db, $this->user, $this->pass);
     }
 }

@@ -1,5 +1,8 @@
-
 <?php
+namespace App;
+
+use App\DB;
+
 require "DB.php";
 
 class Todo
@@ -66,7 +69,7 @@ class Todo
         $stmt->execute([
             ":id" => $id
         ]);
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
 
     }
 

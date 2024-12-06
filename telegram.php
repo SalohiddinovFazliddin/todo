@@ -2,8 +2,10 @@
 
 require 'vendor/autoload.php';
 
-use Dotenv\Dotenv;
+
 use GuzzleHttp\Client;
+
+use Dotenv\Dotenv;
 
 $dotenv = Dotenv::createImmutable(__DIR__);
 $dotenv->load();
