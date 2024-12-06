@@ -1,5 +1,6 @@
 <?php
 
+require 'bootstrap.php';
 require 'src/Todo.php';
 require 'helpers.php';
 require 'src/Router.php';
@@ -7,9 +8,17 @@ require 'src/Router.php';
 $router = new Router();
 $todo = new Todo();
 
-//$router->get('/', function() {
-//    echo '<a href="/todos">Todos</a>';
-//});
+
+$router->put('/todos/{id}/update', function ($todoId) use($todo){
+    $todo->update(
+        $todoId,
+        $_POST['title'],
+        $_POST['status'],
+        $_POST['due_date']
+    );
+    redirect('/todos');
+});
+
 
 
 
@@ -64,7 +73,7 @@ $router->get('/pending/{id}', function($todoId) use ($todo) {
 
 $router->post('/store', function() use ($todo) {
     $todo->store($_POST['title'],$_POST['due_date']);
-    redirect('Location: /todos');
+    redirect('/todos');
 });
 
 $router->get('/todos/{id}/delete',function ($todoId) use ($todo){

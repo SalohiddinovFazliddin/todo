@@ -70,6 +70,18 @@ class Todo
 
     }
 
+    public function update (int $id, string $title, string $status, string $dueDate) {
+        $query = "UPDATE todos set
+            title=:title,status=:status, due_date=:due_date,updated_at=NOW() where id=:id";
+        $stmt = $this->pdo->prepare($query);
+        return $stmt->execute([
+            ":id" => $id,
+            ":title" => $title,
+            ":status" => $status,
+            ":due_date" => $dueDate
+        ]);
+    }
+
 
 }
 

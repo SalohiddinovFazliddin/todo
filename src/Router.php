@@ -41,6 +41,20 @@ public function post($route, $callback)
         }
     }
 
+    public function put($route, $callback){
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if ($_POST['_method'] == 'PUT') {
+
+                $resourceId = $this->getResource();
+                $route = str_replace('{id}',$resourceId, $route);
+                if ($route == $this->currentRoute) {
+                    $callback($resourceId);
+                    exit();
+                }
+            }
+        }
+    }
+
 
 }
 
