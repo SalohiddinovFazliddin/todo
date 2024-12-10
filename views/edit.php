@@ -1,5 +1,5 @@
 <?php
-require 'views/componets/header.php';
+require 'views/componets/Main.php';
 
 ?>
 <div class="edit-container">
